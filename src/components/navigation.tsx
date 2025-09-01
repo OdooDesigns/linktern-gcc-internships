@@ -36,23 +36,12 @@ export function Navigation() {
           
           {/* Auth Buttons */}
           <div className="hidden sm:flex items-center space-x-2">
-            <Button variant="ghost" asChild>
-              <Link to="/login">Sign In</Link>
+            <Button variant="outline" asChild>
+              <Link to="/signin">Sign In</Link>
             </Button>
-            <div className="flex items-center space-x-2">
-              <Button variant="hero" size="sm" asChild>
-                <Link to="/signup/student" className="flex items-center gap-2">
-                  <GraduationCap className="h-4 w-4" />
-                  Student
-                </Link>
-              </Button>
-              <Button variant="secondary" size="sm" asChild>
-                <Link to="/signup/company" className="flex items-center gap-2">
-                  <Building2 className="h-4 w-4" />
-                  Company
-                </Link>
-              </Button>
-            </div>
+            <Button variant="cta" asChild>
+              <Link to="/signup">Get Started</Link>
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
