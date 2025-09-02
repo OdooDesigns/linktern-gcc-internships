@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Navigation } from '@/components/navigation';
+import { ApplyModal } from '@/components/ApplyModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -115,6 +117,7 @@ const mockInternships = [
 const InternshipDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [applyModalOpen, setApplyModalOpen] = useState(false);
   
   const internship = mockInternships.find(i => i.id === id);
 
@@ -135,8 +138,7 @@ const InternshipDetails = () => {
   }
 
   const handleApply = () => {
-    // TODO: Implement apply logic
-    console.log('Apply to internship:', internship.id);
+    setApplyModalOpen(true);
   };
 
   const handleSave = () => {
@@ -357,6 +359,22 @@ const InternshipDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* Apply Modal */}
+      <ApplyModal
+        isOpen={applyModalOpen}
+        onClose={() => setApplyModalOpen(false)}
+        internship={{
+          id: internship.id,
+          title: internship.title,
+          company: internship.company,
+          location: internship.location,
+          type: internship.type,
+          duration: internship.duration,
+          salary: internship.salary,
+          skills: internship.skills
+        }}
+      />
     </div>
   );
 };
