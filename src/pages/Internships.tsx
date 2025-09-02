@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '@/components/navigation';
+import { ApplyModal } from '@/components/ApplyModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -80,6 +81,8 @@ const Internships = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
   const [savedInternships, setSavedInternships] = useState<Set<number>>(new Set());
+  const [applyModalOpen, setApplyModalOpen] = useState(false);
+  const [selectedInternship, setSelectedInternship] = useState<any>(null);
 
   const toggleSaveInternship = (internshipId: number) => {
     const newSaved = new Set(savedInternships);
@@ -89,6 +92,11 @@ const Internships = () => {
       newSaved.add(internshipId);
     }
     setSavedInternships(newSaved);
+  };
+
+  const handleApply = (internship: any) => {
+    setSelectedInternship(internship);
+    setApplyModalOpen(true);
   };
 
   const filteredInternships = mockInternships.filter(internship =>
@@ -240,6 +248,16 @@ const Internships = () => {
                   <div className="text-xs text-muted-foreground">
                     {internship.posted} • {internship.applications} applications
                   </div>
+                  <Button 
+                    size="sm" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleApply(internship);
+                    }}
+                  >
+                    Apply Now
+                  </Button>
                 </div>
               </Link>
             ))}
@@ -253,6 +271,15 @@ const Internships = () => {
           </div>
         </div>
       </main>
+
+      {/* Apply Modal */}
+      {selectedInternship && (
+        <ApplyModal
+          isOpen={applyModalOpen}
+          onClose={() => setApplyModalOpen(false)}
+          internship={selectedInternship}
+        />
+      )}
     </div>
   );
 };
