@@ -7,12 +7,38 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Users, Building2 } from "lucide-react";
 import { Navigation } from "@/components/navigation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 type UserType = "student" | "company";
 
 const SignIn = () => {
   const [activeTab, setActiveTab] = useState<UserType>("student");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    const success = await login(email);
+    
+    if (success) {
+      // Use the selected tab to determine redirect
+      if (activeTab === 'student') {
+        navigate('/student/dashboard');
+      } else {
+        navigate('/employer/dashboard');
+      }
+    } else {
+      alert('Invalid credentials. Try student@demo.com or employer@demo.com');
+    }
+    
+    setIsLoading(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-hero">
@@ -58,13 +84,16 @@ const SignIn = () => {
             </CardHeader>
             
             <CardContent className="space-y-6">
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-white">Email Address</Label>
                   <Input 
                     id="email" 
                     type="email" 
-                    placeholder="Enter your email" 
+                    placeholder="student@demo.com or employer@demo.com" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                     className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
                   />
                 </div>
@@ -74,7 +103,9 @@ const SignIn = () => {
                   <Input 
                     id="password" 
                     type="password" 
-                    placeholder="Enter your password" 
+                    placeholder="Any password (demo)" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
                   />
                 </div>
@@ -92,11 +123,13 @@ const SignIn = () => {
                 </div>
 
                 <Button 
+                  type="submit"
                   variant={activeTab === "student" ? "secondary" : "hero"} 
                   size="lg" 
                   className="w-full font-semibold"
+                  disabled={isLoading}
                 >
-                  Sign In as {activeTab === "student" ? "Student" : "Employer"}
+                  {isLoading ? "Signing in..." : `Sign In as ${activeTab === "student" ? "Student" : "Employer"}`}
                 </Button>
               </form>
 
