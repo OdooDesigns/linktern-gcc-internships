@@ -27,9 +27,9 @@ export function Navigation() {
           <Link to="/internships" className="text-foreground/80 hover:text-foreground transition-colors">
             Browse Internships
           </Link>
-          <Link to="/companies" className="text-foreground/80 hover:text-foreground transition-colors">
+          {/* <Link to="/companies" className="text-foreground/80 hover:text-foreground transition-colors">
             For Companies
-          </Link>
+          </Link> */}
           <Link to="/about" className="text-foreground/80 hover:text-foreground transition-colors">
             About
           </Link>

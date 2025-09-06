@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Search, Users, Briefcase, MessageSquare, Target, Globe, Shield, Zap } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const features = [
   {
@@ -103,9 +104,12 @@ export function FeaturesSection() {
 
         {/* CTA Section */}
         <div className="text-center">
-          <Button size="lg" variant="cta" className="text-lg px-8 py-4">
-            Start Your Journey Today
-          </Button>
+          <Link to="/signup">
+            <Button size="lg" variant="cta" className="text-lg px-8 py-4">
+              Start Your Journey Today
+            </Button>
+          </Link>
+          
         </div>
       </div>
     </section>

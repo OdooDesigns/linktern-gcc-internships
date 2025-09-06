@@ -40,16 +40,16 @@ export function HeroSection() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" variant="hero" asChild className="text-lg px-8 py-4">
-                <Link to="/signup/student" className="flex items-center gap-2">
+                <Link to="/internships" className="flex items-center gap-2">
                   Find Internships
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </Button>
               
               <Button size="lg" variant="outline" asChild className="text-lg px-8 py-4">
-                <Link to="/signup/company" className="flex items-center gap-2">
+                <Link to="/signup" className="flex items-center gap-2">
                   <Play className="h-5 w-5" />
-                  For Companies
+                  Get Started
                 </Link>
               </Button>
             </div>
